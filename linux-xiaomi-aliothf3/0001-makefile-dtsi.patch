@@ -1,0 +1,20 @@
+commit 35370c575735c676ec36fb83b1a6441b5815124e
+Author: Bartek G <bartek.glocki@tlen.pl>
+Date:   Fri Sep 26 08:27:39 2025 +0200
+
+    Added phone dts to the Makefile
+
+diff --git a/arch/arm64/boot/dts/vendor/qcom/Makefile b/arch/arm64/boot/dts/vendor/qcom/Makefile
+index 32461d8585c2..27694ca46939 100644
+--- a/arch/arm64/boot/dts/vendor/qcom/Makefile
++++ b/arch/arm64/boot/dts/vendor/qcom/Makefile
+@@ -66,7 +66,8 @@ kona-arglass-overlay.dtbo-base := kona.dtb kona-v2.dtb kona-v2.1.dtb
+ kona-xrsku4-overlay.dtbo-base := kona.dtb kona-v2.dtb kona-v2.1.dtb
+ kona-hdk-overlay.dtbo-base := kona.dtb kona-v2.dtb kona-v2.1.dtb
+ else
+-dtb-$(CONFIG_ARCH_KONA) += kona-rumi.dtb \
++dtb-$(CONFIG_ARCH_KONA) += sm8250-xiaomi-alioth.dtb \
++		kona-rumi.dtb \
+         kona-mtp.dtb \
+         kona-mtp-ws.dtb \
+         kona-mtp-sa.dtb \

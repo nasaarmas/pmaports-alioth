@@ -1,0 +1,18 @@
+# Reference: <https://postmarketos.org/deviceinfo>
+# Please use double quotes only. You can source this file in shell
+# scripts.
+
+deviceinfo_format_version="0"
+deviceinfo_name="Xiaomi POCO F3"
+deviceinfo_manufacturer="Xiaomi"
+deviceinfo_codename="xiaomi-aliothf3"
+deviceinfo_year="2021"
+deviceinfo_dtb=""
+deviceinfo_arch="aarch64"
+
+# Device related
+deviceinfo_chassis="handset"
+deviceinfo_external_storage="false"
+
+# Bootloader related
+deviceinfo_flash_method="none"

@@ -1,0 +1,65 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-xiaomi-aliothf3
+pkgver=4.19.325
+pkgrel=0
+pkgdesc="Xiaomi POCO F3 kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="xiaomi-aliothf3"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+    linux-headers
+    xz
+"
+
+# Source
+_repository="android_kernel_xiaomi_sm8250"
+_commit="ccea9767d3cc25f1540b4c2474238fbf32809666"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/LineageOS/$_repository/archive/$_commit.tar.gz
+	$_config
+    bpf.patch
+    0001-phones-dtsi.patch
+    0001-makefile-dtsi.patch
+"
+
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+    REPLACE_GCCH=0
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+}
+
+sha512sums="
+d94dff521d205db15823eacec4a318413fd701a9e5387afdf416b6a734c7ab3a409c74e47ce845b94d7bcd262591ca8678b6475846df233ec1cc893661226b73  linux-xiaomi-aliothf3-ccea9767d3cc25f1540b4c2474238fbf32809666.tar.gz
+6ff002ed14e64312440ff0a2f8ccbe4554381bc5a5e895b5729549f3bb802b0d2d0f2a8b339037e4a608d444e24032c3cbffe7fa5d88736de646b53f80e6c499  config-xiaomi-aliothf3.aarch64
+eb5855821230b02ab5b737f12f2c1cf3d0d0044596e2252a055e3c75476b4e0a2d2ce803ca1487cd72c4efdfe4e523f5a81cbe5350d29a47f0e06f0fa248d190  bpf.patch
+e840289c015664b16e57c038822738867aa6fce43fd8d289e7868b51a309dd272e3459008e6a60af2246636fb8501cabf3a336d00e88d21cdcba3efe6c5b3047  0001-phones-dtsi.patch
+0305423e8ec83aa036383230ab10f49e86766a3faabbe4a3d5722505a59774af6572f8b470abf7cc27cc262651dd09169686d630b6ae6a9b4b9636d8582d3654  0001-makefile-dtsi.patch
+"

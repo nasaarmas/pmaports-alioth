@@ -1,0 +1,69 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-xiaomi-alioth
+pkgver=6.13.4
+pkgrel=0
+pkgdesc="Xiaomi POCO F3 kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="xiaomi-alioth"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+    postmarketos-installkernel
+    linux-headers
+    xz
+    python3
+"
+
+# Source
+_tag="alioth"
+_config="config-$_flavor.$arch"
+source="
+    $pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/nikroks/alioth/linux-$_tag.tar.gz
+    $_config
+"
+
+builddir="$srcdir/linux-nikroks-alioth"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/config-$_flavor.$arch" .config			
+}
+
+build() {
+	unset LDFLAGS
+    make ARCH="$_carch" CC="${CC:-gcc}" \
+            KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	mkdir -p "$pkgdir"/boot
+
+	make zinstall modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+}
+
+sha512sums="
+2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-xiaomi-alioth-alioth.tar.gz
+de299df3f55b148a258163fcfd14da2207124e2368df7b0896ba6c5bcaaa698654eeaa0c0ee25fe590ee2c028d094504c07444548292999599e07939ed2907e9  config-xiaomi-alioth.aarch64
+"
