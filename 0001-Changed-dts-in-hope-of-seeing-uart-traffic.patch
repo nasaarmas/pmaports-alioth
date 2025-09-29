@@ -1,0 +1,56 @@
+From a26f202f8686b296cb5c447352948c0ef504ad76 Mon Sep 17 00:00:00 2001
+From: Bartek G <bartek.glocki@tlen.pl>
+Date: Mon, 29 Sep 2025 16:23:33 +0200
+Subject: [PATCH] Changed dts in hope of seeing uart traffic
+
+---
+ .../boot/dts/qcom/sm8250-xiaomi-alioth.dts    | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-alioth.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-alioth.dts
+index 4652c6241f38..4ee78b0fcfca 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-alioth.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-alioth.dts
+@@ -39,7 +39,7 @@ / {
+ 	qcom,board-id = <44 0>;
+ 
+ 	aliases {
+-		serial0 = &uart6;
++		serial0 = &uart2;
+ 	};
+ 
+ 	chosen {
+@@ -1278,22 +1278,9 @@ mclk0-pins {
+ 	};
+ };
+ 
+-&uart6 {
++&uart2 {
+ 	status = "okay";
+ 
+-	bluetooth {
+-		compatible = "qcom,qca6390-bt";
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&sw_ctrl>;
+-		swctrl-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
+-		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+-		vddaon-supply = <&vreg_pmu_aon_0p59>;
+-		vddasd-supply = <&vreg_l16a_3p3>;
+-		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+-		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+-		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+-		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+-	};
+ };
+ 
+ &usb_1 {
+@@ -1341,4 +1328,4 @@ &ufs_mem_phy {
+ &venus {
+ 	firmware-name = "qcom/sm8250/xiaomi/alioth/venus.mbn";
+ 	status = "okay";
+-};
+\ No newline at end of file
++};
+-- 
+2.43.0
+
