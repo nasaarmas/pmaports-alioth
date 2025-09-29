@@ -1,51 +1,47 @@
-# Reference: <https://postmarketos.org/vendorkernel>
-# Kernel config based on: arch/arm64/configs/(CHANGEME!)
-
-pkgname=linux-xiaomi-alioth
-pkgver=6.13.4
+# Maintainer: Nikroks <nikroks@mainlining.org>
+_flavor="xiaomi-aliothf3"
+pkgname=linux-$_flavor
+pkgver=6.15.1
 pkgrel=0
-pkgdesc="Xiaomi POCO F3 kernel fork"
+pkgdesc="Mainline kernel fork for SM8250"
 arch="aarch64"
 _carch="arm64"
-_flavor="xiaomi-alioth"
-url="https://kernel.org"
+url="https://github.com/mainlining/linux/tree/nikroks/alioth"
 license="GPL-2.0-only"
-options="!strip !check !tracedeps pmb:cross-native"
+options="!strip !check !tracedeps
+	pmb:cross-native
+	pmb:kconfigcheck-nftables
+"
 makedepends="
 	bash
-	bc
 	bison
-	devicepkg-dev
 	findutils
 	flex
 	openssl-dev
 	perl
-    postmarketos-installkernel
-    linux-headers
-    xz
-    python3
+	postmarketos-installkernel
+	python3
 "
 
 # Source
 _tag="alioth"
+_commit="022f7f866a9377c34301e60ba131121c624d2e56"
 _config="config-$_flavor.$arch"
 source="
-    $pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/nikroks/alioth/linux-$_tag.tar.gz
-    $_config
+	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/$_commit.tar.gz
+	$_config
 "
-
-builddir="$srcdir/linux-nikroks-alioth"
-_outdir="out"
+builddir="$srcdir/linux-$_commit"
 
 prepare() {
 	default_prepare
-	cp "$srcdir/config-$_flavor.$arch" .config			
+	cp "$srcdir/config-$_flavor.$arch" .config
 }
 
 build() {
 	unset LDFLAGS
-    make ARCH="$_carch" CC="${CC:-gcc}" \
-            KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
 }
 
 package() {
@@ -63,7 +59,8 @@ package() {
 		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
 }
 
+
 sha512sums="
-2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-xiaomi-alioth-alioth.tar.gz
-de299df3f55b148a258163fcfd14da2207124e2368df7b0896ba6c5bcaaa698654eeaa0c0ee25fe590ee2c028d094504c07444548292999599e07939ed2907e9  config-xiaomi-alioth.aarch64
+20a40e0166ac40488adb7a91ec87fe19d9a5bdc1d2c7b05e3ddf58fcb1fe49ee1635bc3283923bd21d7b13495d0458b27629b5f07df75137a170744204d4a05d  linux-xiaomi-aliothf3-alioth.tar.gz
+602fad4c717e3ab39c3b617351be7bed2178b2ae97211ddb9ffa5fa20623a234818718c41a4aedf4f67784a02dc54f8f1b42ce7d180fdf8ea93f8522d59c4d34  config-xiaomi-aliothf3.aarch64
 "

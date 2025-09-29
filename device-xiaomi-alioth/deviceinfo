@@ -5,7 +5,7 @@
 deviceinfo_format_version="0"
 deviceinfo_name="Xiaomi POCO F3"
 deviceinfo_manufacturer="Xiaomi"
-deviceinfo_codename="xiaomi-alioth"
+deviceinfo_codename="xiaomi-aliothf3"
 deviceinfo_year="2021"
 deviceinfo_arch="aarch64"
 deviceinfo_flash_kernel_on_update="true"
@@ -23,7 +23,7 @@ deviceinfo_append_dtb="true"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline=""
+deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon=msm_geni_uart,0x988000"
 deviceinfo_generate_bootimg="true"
 deviceinfo_flash_pagesize="4096"
 deviceinfo_bootimg_qcdt="false"
