@@ -1,7 +1,0 @@
-diff --git a/arch/arm64/boot/dts/vendor/qcom/kona-v2.1-iot-rb5.dtsi b/arch/arm64/boot/dts/vendor/qcom/kona-v2.1-iot-rb5.dtsi
-index 611f32ec87..dc97608204 100644
---- a/arch/arm64/boot/dts/vendor/qcom/kona-v2.1-iot-rb5.dtsi
-+++ b/arch/arm64/boot/dts/vendor/qcom/kona-v2.1-iot-rb5.dtsi
-@@
--       fsa4480: fsa4480@43 {
-+       fsa4480_43: fsa4480@43 {

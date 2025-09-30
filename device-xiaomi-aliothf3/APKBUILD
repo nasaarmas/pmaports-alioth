@@ -8,7 +8,8 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-xiaomi-aliothf3
+	linux-xiaomi-alioth
+	mkbootimg
 	postmarketos-base
 "
 makedepends="devicepkg-dev"
@@ -25,4 +26,7 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
-sha512sums="(run 'pmbootstrap checksum device-xiaomi-aliothf3' to fill)"
+sha512sums="
+560730ec117beffd2798d0f463b0ec3b197dcc1a077c6ea95566af3f24b1e9a65975c25deac5311d66570b45aaced5a2ef40d85a0f33e4f7337bd823264ce7ec  deviceinfo
+e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
+"
