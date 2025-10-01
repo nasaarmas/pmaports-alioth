@@ -9,6 +9,7 @@ deviceinfo_codename="xiaomi-aliothf3"
 deviceinfo_year="2021"
 deviceinfo_arch="aarch64"
 deviceinfo_flash_kernel_on_update="true"
+deviceinfo_header_version="3"
 
 # Device related
 deviceinfo_chassis="handset"
@@ -27,7 +28,6 @@ deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon=msm_geni_uart,0x988
 deviceinfo_generate_bootimg="true"
 deviceinfo_flash_pagesize="4096"
 deviceinfo_bootimg_qcdt="false"
-deviceinfo_header_version="3"
 deviceinfo_bootimg_mtk_mkimage="false"
 deviceinfo_bootimg_dtb_second="false"
 
@@ -44,4 +44,4 @@ deviceinfo_flash_offset_dtb="0x01f00000"
 deviceinfo_rootfs_image_sector_size="4096"
 
 # Support super partition flashing
-deviceinfo_super_partitions="/dev/sda30 /dev/sda30"
+# deviceinfo_super_partitions="/dev/sda30 /dev/sda30"
