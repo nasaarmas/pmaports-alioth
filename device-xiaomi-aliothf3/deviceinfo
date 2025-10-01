@@ -13,6 +13,7 @@ deviceinfo_header_version="3"
 
 # Device related
 deviceinfo_chassis="handset"
+deviceinfo_keyboard="false"
 deviceinfo_external_storage="false"
 deviceinfo_screen_width="1080"
 deviceinfo_screen_height="2400"
@@ -24,12 +25,13 @@ deviceinfo_append_dtb="true"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon=msm_geni_uart,0x988000"
+deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon=msm_geni_uart,0x988000 earlyprintk=serial"
 deviceinfo_generate_bootimg="true"
 deviceinfo_flash_pagesize="4096"
 deviceinfo_bootimg_qcdt="false"
 deviceinfo_bootimg_mtk_mkimage="false"
 deviceinfo_bootimg_dtb_second="false"
+deviceinfo_flash_sparse="true"
 
 # Offsets
 deviceinfo_flash_offset_base="0x00000000"
