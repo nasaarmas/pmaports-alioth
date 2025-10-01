@@ -53,16 +53,16 @@ package() {
 		INSTALL_PATH="$pkgdir"/boot/ \
 		INSTALL_MOD_PATH="$pkgdir" \
 		INSTALL_MOD_STRIP=1 \
-		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+		INSTALL_DTBS_PATH="$pkgdir/boot/dtbs"
 	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
 
 	install -D "$builddir"/include/config/kernel.release \
-		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
 }
 
 
 sha512sums="
 20a40e0166ac40488adb7a91ec87fe19d9a5bdc1d2c7b05e3ddf58fcb1fe49ee1635bc3283923bd21d7b13495d0458b27629b5f07df75137a170744204d4a05d  linux-xiaomi-aliothf3-alioth.tar.gz
-9d7a3f35a8987b6b8681836a6702624765407a05e6a335d6b92d2c3f3fa168c1b5aabc37882f345c2f621f4da7631ec8b74f5f60341c207cd0d42d2a5f07c1d1  config-xiaomi-aliothf3.aarch64
+a2684817050e70b71a8d00bc974d39cad50c084e601a22b0fdade5f4d83be81e9ce799d09dfcfc0607c169db387761ea27450e0d1884bc38480674e37306dd93  config-xiaomi-aliothf3.aarch64
 273152ad1712786cc0353c0f2c1151bcdf65f15fca157a40c591149e34cecaea92ca14772c7dcce77df140ee8b9eb812d8d3df0f56f38125344d73369da547c0  0001-Changed-dts-in-hope-of-seeing-uart-traffic.patch
 "

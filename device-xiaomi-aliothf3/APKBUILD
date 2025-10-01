@@ -1,68 +1,32 @@
-# Maintainer: Nikroks <nikroks@mainlining.org>
-_flavor="xiaomi-aliothf3"
-pkgname=linux-$_flavor
-pkgver=6.15.1
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-xiaomi-aliothf3
+pkgdesc="Xiaomi POCO F3"
+pkgver=1
 pkgrel=0
-pkgdesc="Mainline kernel fork for SM8250"
+url="https://postmarketos.org"
+license="MIT"
 arch="aarch64"
-_carch="arm64"
-url="https://github.com/mainlining/linux/tree/nikroks/alioth"
-license="GPL-2.0-only"
-options="!strip !check !tracedeps
-	pmb:cross-native
-	pmb:kconfigcheck-nftables
+options="!check !archcheck"
+depends="
+	linux-xiaomi-aliothf3
+	postmarketos-base
+	mkbootimg
 "
-makedepends="
-	bash
-	bison
-	findutils
-	flex
-	openssl-dev
-	perl
-	postmarketos-installkernel
-	python3
-"
-
-# Source
-_tag="alioth"
-_commit="022f7f866a9377c34301e60ba131121c624d2e56"
-_config="config-$_flavor.$arch"
+makedepends="devicepkg-dev"
 source="
-	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/$_commit.tar.gz
-	$_config
-    0001-Changed-dts-in-hope-of-seeing-uart-traffic.patch
+	deviceinfo
+	modules-initfs
 "
-builddir="$srcdir/linux-$_commit"
-
-prepare() {
-	default_prepare
-	cp "$srcdir/config-$_flavor.$arch" .config
-}
 
 build() {
-	unset LDFLAGS
-	make ARCH="$_carch" CC="${CC:-gcc}" \
-		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+	devicepkg_build $startdir $pkgname
 }
 
 package() {
-	mkdir -p "$pkgdir"/boot
-
-	make zinstall modules_install dtbs_install \
-		ARCH="$_carch" \
-		INSTALL_PATH="$pkgdir"/boot/ \
-		INSTALL_MOD_PATH="$pkgdir" \
-		INSTALL_MOD_STRIP=1 \
-		INSTALL_DTBS_PATH="$pkgdir/boot/dtbs"
-	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
-
-	install -D "$builddir"/include/config/kernel.release \
-		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
+	devicepkg_package $startdir $pkgname
 }
 
-
 sha512sums="
-20a40e0166ac40488adb7a91ec87fe19d9a5bdc1d2c7b05e3ddf58fcb1fe49ee1635bc3283923bd21d7b13495d0458b27629b5f07df75137a170744204d4a05d  linux-xiaomi-aliothf3-alioth.tar.gz
-a2684817050e70b71a8d00bc974d39cad50c084e601a22b0fdade5f4d83be81e9ce799d09dfcfc0607c169db387761ea27450e0d1884bc38480674e37306dd93  config-xiaomi-aliothf3.aarch64
-273152ad1712786cc0353c0f2c1151bcdf65f15fca157a40c591149e34cecaea92ca14772c7dcce77df140ee8b9eb812d8d3df0f56f38125344d73369da547c0  0001-Changed-dts-in-hope-of-seeing-uart-traffic.patch
+865dcfd027029b5b767f2401ddce9e1ab5187b01b76e2158fda895db631176ffd0ef73f46122198dda50e014f89f8ed3d349ba1efd970355092a18168e3a4d0d  deviceinfo
+e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
 "
