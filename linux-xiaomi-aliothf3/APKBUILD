@@ -1,7 +1,7 @@
 # Maintainer: Nikroks <nikroks@mainlining.org>
 _flavor="xiaomi-aliothf3"
 pkgname=linux-$_flavor
-pkgver=6.15.1
+pkgver=6.13.4
 pkgrel=0
 pkgdesc="Mainline kernel fork for SM8250"
 arch="aarch64"
@@ -25,14 +25,13 @@ makedepends="
 
 # Source
 _tag="alioth"
-_commit="022f7f866a9377c34301e60ba131121c624d2e56"
 _config="config-$_flavor.$arch"
 source="
-	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/$_commit.tar.gz
+	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/nikroks/alioth/linux-$_tag.tar.gz
 	$_config
-    0001-Changed-dts-in-hope-of-seeing-uart-traffic.patch
 "
-builddir="$srcdir/linux-$_commit"
+builddir="$srcdir/linux-nikroks-$_tag"
+
 
 prepare() {
 	default_prepare
@@ -62,7 +61,6 @@ package() {
 
 
 sha512sums="
-20a40e0166ac40488adb7a91ec87fe19d9a5bdc1d2c7b05e3ddf58fcb1fe49ee1635bc3283923bd21d7b13495d0458b27629b5f07df75137a170744204d4a05d  linux-xiaomi-aliothf3-alioth.tar.gz
-a2684817050e70b71a8d00bc974d39cad50c084e601a22b0fdade5f4d83be81e9ce799d09dfcfc0607c169db387761ea27450e0d1884bc38480674e37306dd93  config-xiaomi-aliothf3.aarch64
-273152ad1712786cc0353c0f2c1151bcdf65f15fca157a40c591149e34cecaea92ca14772c7dcce77df140ee8b9eb812d8d3df0f56f38125344d73369da547c0  0001-Changed-dts-in-hope-of-seeing-uart-traffic.patch
+2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-xiaomi-aliothf3-alioth.tar.gz
+cceb520982117375290640ac785d051a80a3e98c53fd583ce769a2d32a935faac966e1692a14e53148d65256bce56428a841405a5fc5c601d7e9ea607f841b6c  config-xiaomi-aliothf3.aarch64
 "

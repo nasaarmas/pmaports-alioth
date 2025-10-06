@@ -1,4 +1,5 @@
 # Reference: <https://postmarketos.org/devicepkg>
+# Maintainer: Nikroks <nikroksm@mail.ru>
 pkgname=device-xiaomi-aliothf3
 pkgdesc="Xiaomi POCO F3"
 pkgver=1
@@ -8,14 +9,29 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
+	alsa-ucm-conf
+	bootmac
+	hexagonrpcd
+	make-dynpart-mappings
+	mesa-vulkan-freedreno
+	mkbootimg
+	swclock-offset
 	linux-xiaomi-aliothf3
 	postmarketos-base
-	mkbootimg
+	qbootctl
 "
 makedepends="devicepkg-dev"
 source="
+	81-libssc-xiaomi-alioth.rules
+	alsa-ucm-conf/alioth.conf
+	alsa-ucm-conf/HiFi.conf
 	deviceinfo
+	hexagonrpcd.confd
 	modules-initfs
+"
+subpackages="
+	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-nonfree-firmware-openrc:nonfree_firmware_openrc
 "
 
 build() {
@@ -24,9 +40,53 @@ build() {
 
 package() {
 	devicepkg_package $startdir $pkgname
+
+	# device-specific alsa ucm conf
+	install -Dm644 "$srcdir/alioth.conf" \
+		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/alioth.conf"
+
+	install -Dm644 "$srcdir/HiFi.conf" \
+		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/HiFi.conf"
+
+	mkdir -p "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250"
+	ln -s ../../Xiaomi/alioth/alioth.conf \
+		"$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250/xiaomi-alioth.conf"
+}
+
+nonfree_firmware() {
+	pkgdesc="GPU, venus, modem and sensor firmware"
+	depends="
+		firmware-xiaomi-alioth
+		firmware-qcom-adreno-a650
+		linux-firmware-qcom
+		linux-firmware-qca
+		linux-firmware-ath11k
+		tqftpserv
+	"
+	mkdir "$subpkgdir"
+
+	install -Dm644 81-libssc-xiaomi-alioth.rules \
+		"$subpkgdir"/etc/udev/rules.d/81-libssc-xiaomi-alioth.rules
+
+	install -Dm644 "$srcdir"/hexagonrpcd.confd \
+		"$subpkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
+}
+
+nonfree_firmware_openrc() {
+	install_if="$pkgname-nonfree-firmware=$pkgver-r$pkgrel openrc"
+	install="$subpkgname.post-install $subpkgname.post-upgrade"
+	depends="
+		hexagonrpcd-openrc
+		tqftpserv-openrc
+	"
+	mkdir -p "$subpkgdir"
 }
 
 sha512sums="
-865dcfd027029b5b767f2401ddce9e1ab5187b01b76e2158fda895db631176ffd0ef73f46122198dda50e014f89f8ed3d349ba1efd970355092a18168e3a4d0d  deviceinfo
-e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
+2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-xiaomi-alioth.rules
+8db13314073e15c45defa9d366e5d1a88d21f87491edea0d0242c370d248022acaef39b6cf74bfaaa45d474eb045ba8de2427c29095978f5f184dda1ae55d53b  alioth.conf
+7e1ac8d01a948c1d60cb397e702872b679f650b04431e7d1a550fb618f2ed431efc04f1dec671c3b5d243d55b3699892256ea0676248e69e0f1c38f7c2001db0  HiFi.conf
+0f2da0c273429c822e0722b02d9427bd468ee5aa10ef9b46e3f92362a983f519ebb842ae182e8f195e9561fcb3a95c5d38e12207fa942b1e3a2ddb36342de038  deviceinfo
+dbf96453e5e398ed11f315069d6eedde0ada1f387bf42e3cc78fcd152e061db68f4c16ed1dc6169067ad65b5bc96c9a8ae9d5503bcb06a257445c9a12390f606  hexagonrpcd.confd
+b2447feecfd7a66223da925783803b002e1880d888060c4e2abfc54523ef45c728313037261fe236b706e4c415a0ee68f20612ae8ed9373ea2c5bfa590227e74  modules-initfs
 "
