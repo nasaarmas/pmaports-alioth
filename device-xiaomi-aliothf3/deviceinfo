@@ -24,7 +24,7 @@ deviceinfo_append_dtb="true"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline="console=ttyGENI0,115200n8 console=ttyMSM0,115200n8 console=ttyMSM1,115200n8 earlycon=msm_geni_uart,0x988000 earlyprintk loglevel=8"
+deviceinfo_kernel_cmdline="earlycon=qcom_geni,0xa90000,115200 console=ttyGENI0,115200 console=ttyMSM0,115200 console=tty0,115200 ignore_loglevel"
 deviceinfo_generate_bootimg="true"
 deviceinfo_flash_pagesize="4096"
 deviceinfo_bootimg_qcdt="false"
