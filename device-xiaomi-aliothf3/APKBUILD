@@ -14,13 +14,15 @@ depends="
 	hexagonrpcd
 	make-dynpart-mappings
 	mesa-vulkan-freedreno
+    android-tools
 	mkbootimg
 	swclock-offset
 	linux-xiaomi-aliothf3
 	postmarketos-base
 	qbootctl
+    generate_bootimg
 "
-makedepends="devicepkg-dev"
+makedepends="devicepkg-dev android-tools generate_bootimg"
 source="
 	81-libssc-xiaomi-alioth.rules
 	alsa-ucm-conf/alioth.conf
@@ -28,6 +30,7 @@ source="
 	deviceinfo
 	hexagonrpcd.confd
 	modules-initfs
+    vendor_ramdisk
 "
 subpackages="
 	$pkgname-nonfree-firmware:nonfree_firmware
@@ -47,6 +50,10 @@ package() {
 
 	install -Dm644 "$srcdir/HiFi.conf" \
 		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/HiFi.conf"
+
+    install -Dm644 "$srcdir/vendor_ramdisk" \
+		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/vendor_ramdisk"
+
 
 	mkdir -p "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250"
 	ln -s ../../Xiaomi/alioth/alioth.conf \
@@ -86,7 +93,8 @@ sha512sums="
 2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-xiaomi-alioth.rules
 8db13314073e15c45defa9d366e5d1a88d21f87491edea0d0242c370d248022acaef39b6cf74bfaaa45d474eb045ba8de2427c29095978f5f184dda1ae55d53b  alioth.conf
 7e1ac8d01a948c1d60cb397e702872b679f650b04431e7d1a550fb618f2ed431efc04f1dec671c3b5d243d55b3699892256ea0676248e69e0f1c38f7c2001db0  HiFi.conf
-b378d45cb514471afbd3b3fa0d851c61d9f5b86f1de1ebb2b642089433f301d5daa65491dd6e40b2b0d9925badbd103ec10f9126d06cc776ab9ac8412119f881  deviceinfo
+9d8db0c8080facd9b8b00e2a733abbb31b5ee091c810354aacccca3c48fa7bfb4f8afbe01d42dae308556b4cd5387196236caeae451d9e386a64bb81d3ebf96f  deviceinfo
 dbf96453e5e398ed11f315069d6eedde0ada1f387bf42e3cc78fcd152e061db68f4c16ed1dc6169067ad65b5bc96c9a8ae9d5503bcb06a257445c9a12390f606  hexagonrpcd.confd
 b2447feecfd7a66223da925783803b002e1880d888060c4e2abfc54523ef45c728313037261fe236b706e4c415a0ee68f20612ae8ed9373ea2c5bfa590227e74  modules-initfs
+2c8374abaeaf96ca76dea4e0f040386e322c6387f286c7a59ff460a22112e123d2f81a3f5c50122ea9df873ac56c560acf2c63846084bcf9e79ff32b3428839a  vendor_ramdisk
 "
