@@ -1,31 +1,40 @@
-# pmaport for xiaomi poco f3 - alioth
+**pmaport for xiaomi poco f3 - alioth**
 
-## Table of Contents
-- [pmaport for xiaomi poco f3 - alioth](#pmaport-for-xiaomi-poco-f3---alioth)
-  - [Table of Contents](#table-of-contents)
-  - [1. Current State](#1-current-state)
-  - [2. Introduction](#2-introduction)
-  - [3. Getting the Kernel to Work](#3-getting-the-kernel-to-work)
-    - [Key Config Changes from nikroks defconfig:](#key-config-changes-from-nikroks-defconfig)
-  - [4. Getting UART Logs](#4-getting-uart-logs)
-    - [4.1. Finding UART Pins on the PCB](#41-finding-uart-pins-on-the-pcb)
-    - [4.2. Reading UART](#42-reading-uart)
-    - [Arduino Code](#arduino-code)
-    - [Capturing the Logs](#capturing-the-logs)
+**Table of Contents**
+- [1. Innstallation guide](#1-innstallation-guide)
+- [1. Current State](#1-current-state)
+- [2. Introduction](#2-introduction)
+- [3. Getting the Kernel to Work](#3-getting-the-kernel-to-work)
+  - [3.1. Key Config Changes from nikroks defconfig:](#31-key-config-changes-from-nikroks-defconfig)
+- [4. Getting UART Logs](#4-getting-uart-logs)
+  - [4.1. Finding UART Pins on the PCB](#41-finding-uart-pins-on-the-pcb)
+  - [4.2. Reading UART](#42-reading-uart)
+  - [4.3. Arduino Code](#43-arduino-code)
+  - [4.4. Capturing the Logs](#44-capturing-the-logs)
 
 ---
+# 1. Innstallation guide
 
-## 1. Current State
+After building the device with systemd:
+```
+fastboot erase dtbo_b
+pmbootstrap flasher flash_rootfs --partition userdata
+pmbootstrap flasher flash_kernel --partition boot_b
+fastboot set_active b
+```
+
+# 1. Current State
 Device was built and tested with plasma-mobile UI with systemd.
 
 It works without major issues, most importantly WiFi with `nmtui` is available.
 
 Little cranky at times, TODO:
+ - Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start
  - Fix `KWindow` as it crashes frequently
  - Verify which defconfig options are needed
  - Enable bluetooth - disabled to enable UART debugging
 
-## 2. Introduction
+# 2. Introduction
 This phone uses qcom sm8250 CPU and adreno650 GPU, so the port was based on existing postmarketOS work for this chip. Good starting point: [Xiaomi Mi Pad 5 Pro (xiaomi-elish)](https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish))
 
 I also found this [alioth pmaport by nikroks](https://github.com/mainlining/pmaports/tree/nikroks/alioth), but for some reason it crashes straight back to fastboot.
@@ -34,7 +43,7 @@ Good guy @Maledict found that defconfig from Mi Pad 5 Pro worked with [linux for
 
 We can call this our starting point.
 
-## 3. Getting the Kernel to Work
+# 3. Getting the Kernel to Work
 
 The nikroks kernel had potential but needed some config tweaking. Started with the basic setup:
 ```bash
@@ -53,7 +62,7 @@ MMC doesn't seem needed since we only have UFS memory, so disabled `CONFIG_MMC`.
 
 Phone has GPU so DRM should work - adreno650 support is there.
 
-### Key Config Changes from nikroks defconfig:
+## 3.1. Key Config Changes from nikroks defconfig:
 ```
 CONFIG_ARM64_VA_BITS to 48
 CONFIG_PGTABLE_LEVELS to 4
@@ -76,11 +85,13 @@ CONFIG_ZRAM_BACKEND_ZSTD to y
 
 *The breakthrough:* After changing `CONFIG_EFI_ZBOOT` to `n`, it started working! Since the phone is missing EFI, this part was never being decompressed - and that was the biggest issue with the config. UART logs showing missing DTB pointed at the decompression issue and further confirms that the phone doesn't have EFI.
 
-## 4. Getting UART Logs
+# 4. Getting UART Logs
 
-UART logs were configured before the elish defconfig was discovered as working. Because the nikroks defconfig failed pretty early, the only logs visible in early work were **Android BootLoader (ABL) logs** - which is still cool.
+UART logs were configured before the elish defconfig was discovered as working. Because the nikroks defconfig failed pretty early, the only logs visible in early work were **Android BootLoader (ABL) logs**, which is still cool. 
 
-### 4.1. Finding UART Pins on the PCB
+ - Dumps can be found [here](uart_logs).
+
+## 4.1. Finding UART Pins on the PCB
 
 [pmOS wiki for xiaomi poco F3](https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F3_(xiaomi-alioth)) already contains info about UART TX location.
 
@@ -97,7 +108,7 @@ So I decided to solder wire to UART TX pin only, like in this example image from
 | ------------------------------------------------ |
 | _UART TX marked on the poco F3 PCB_              |
 
-### 4.2. Reading UART
+## 4.2. Reading UART
 
 I didn't have a UART to USB-A converter so I had to get creative. Found an _Arduino UNO R3_ which by default communicates with the computer via UART protocol on pins 0 and 1.
 
@@ -116,7 +127,7 @@ Final working connection:
 | --------------------------------------------------------- |
 | _Phone connected to the arduino via level shifter_        |
 
-### Arduino Code
+## 4.3. Arduino Code
 
 Simple passthrough from RX to TX:
 ```cpp
@@ -143,7 +154,7 @@ void loop() {
 }
 ```
 
-### Capturing the Logs
+## 4.4. Capturing the Logs
 
 Connect arduino to the computer and listen via `minicom`:
 ```bash

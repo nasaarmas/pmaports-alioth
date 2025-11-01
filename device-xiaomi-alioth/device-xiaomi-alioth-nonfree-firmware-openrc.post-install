@@ -1,4 +1,0 @@
-#!/bin/sh
-rc-update add qbootctl default
-rc-update add hexagonrpcd-sdsp default
-rc-update add tqftpserv default

@@ -9,6 +9,7 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
+	linux-postmarketos-qcom-sm8250-alioth
 	alsa-ucm-conf
 	bootmac
 	hexagonrpcd>=0.3.2-r3
@@ -18,7 +19,9 @@ depends="
 	postmarketos-base
 	qbootctl
 	swclock-offset
+	hexagonrpcd-systemd
 "
+
 makedepends="devicepkg-dev"
 source="
 	81-libssc-xiaomi-alioth.rules
@@ -30,11 +33,7 @@ source="
 "
 
 subpackages="
-	$pkgname-kernel-boe:kernel_boe
-	$pkgname-kernel-csot:kernel_csot
 	$pkgname-nonfree-firmware:nonfree_firmware
-    $pkgname-nonfree-firmware-openrc:nonfree_firmware_openrc
-
 "
 
 build() {
@@ -54,21 +53,8 @@ package() {
 	mkdir -p "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250"
 	ln -s ../../Xiaomi/alioth/alioth.conf \
 		"$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250/xiaomi-alioth.conf"
-
-
 }
 
-kernel_boe() {
-	pkgdesc="BOE Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish)"
-	depends="linux-postmarketos-qcom-sm8250-alioth"
-	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
-}
-
-kernel_csot() {
-	pkgdesc="CSOT Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish)"
-	depends="linux-postmarketos-qcom-sm8250"
-	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
-}
 
 nonfree_firmware() {
 	pkgdesc="Firmware for GPU, WiFi, etc."
@@ -89,16 +75,6 @@ nonfree_firmware() {
 		"$pkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
 }
 
-nonfree_firmware_openrc() {
-	install_if="$pkgname-nonfree-firmware=$pkgver-r$pkgrel openrc"
-	install="$subpkgname.post-install $subpkgname.post-upgrade"
-	depends="
-        hexagonrpcd-openrc
-        tqftpserv-openrc
-    "
-
-	mkdir -p "$subpkgdir"
-}
 
 sha512sums="
 2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-xiaomi-alioth.rules

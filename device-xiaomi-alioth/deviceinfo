@@ -19,8 +19,7 @@ deviceinfo_screen_width="1080"
 deviceinfo_screen_height="2400"
 
 # Kernel options
-deviceinfo_dtb_boe="qcom/sm8250-xiaomi-alioth"
-deviceinfo_dtb_csot="qcom/sm8250-xiaomi-elish-csot"
+deviceinfo_dtb="qcom/sm8250-xiaomi-alioth"
 deviceinfo_append_dtb="true"
 
 # Bootloader related
