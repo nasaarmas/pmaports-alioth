@@ -1,0 +1,425 @@
+UART adapter begin:
+Handling Cmd: getvar:has-slot:vendor_boot
+2984, 2984, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:1, voltage:4391, temp:31
+Handling Cmd: getvar:max-download-size
+2984, 2984, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:1, voltage:4391, temp:31
+Handling Cmd: getvar:is-logical:vendor_boot
+2984, 2984, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:1, voltage:4391, temp:31
+Handling Cmd: getvar:is-logical:vendor_boot
+2984, 2984, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:1, voltage:4391, temp:31
+Handling Cmd: getvar:partition-size:vendor_boot
+2984, 2984, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:1, voltage:4391, temp:31
+Handling Cmd: download:017e6000
+Download Finished
+Handling Cmd: flash:vendor_boot
+Flash Partition early name: vendor_boot(1/1)
+flash raw image
+flash image status:  Success
+Handling Cmd: getvar:has-slot:boot_b
+2988, 2988, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:4, voltage:4391, temp:31
+Handling Cmd: getvar:max-download-size
+2988, 2988, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:4, voltage:4391, temp:31
+Handling Cmd: getvar:is-logical:boot_b
+2988, 2988, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:4, voltage:4391, temp:31
+Handling Cmd: getvar:is-logical:boot_b
+2988, 2988, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:4, voltage:4391, temp:31
+Handling Cmd: getvar:partition-size:boot_b
+2988, 2988, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:4, voltage:4391, temp:31
+Handling Cmd: download:00c02000
+Download Finished
+Handling Cmd: flash:boot_b
+Flash Partition early name: boot_b(1/1)
+flash raw image
+flash image status:  Success
+Handling Cmd: reboot
+rebooting the device
+Start EBS        [2994370] 
+App Log Flush : 0 ms
+Exit EBS        [2994539] UEFI End
+
+Format: Log Type - Time(microsec) - Message - Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.XF.3.2-00304-SM8250-2
+S - IMAGE_VARIANT_STRING=Soc8250LAA
+S - OEM_IMAGE_VERSION_STRING=pangu-build-bp-6920-q05wt-bbblq-th8t5
+S - Boot Interface: UFS
+S - Secure Boot: On
+S - Boot Config @ 0x00786070 = 0x00000001
+S - JTAG ID @ 0x00786130 = 0x200c30e1
+S - OEM ID @ 0x00786138 = 0x00720000
+S - Serial Number @ 0x00786134 = 0xf933e2c3
+S - Feature Config Row 0 @ 0x007841f8 = 0x0040200011c00420
+S - Feature Config Row 1 @ 0x00784200 = 0xc000000000000000
+S - Core 0 Frequency, 1516 MHz
+S - PBL Patch Ver: 5
+S - PBL freq: 600 MHZ
+D -      6209 - pbl_apps_init_timestamp
+D -    198512 - bootable_media_detect_timestamp
+D -      1056 - bl_elf_metadata_loading_timestamp
+D -      9387 - bl_hash_seg_auth_timestamp
+D -      6931 - bl_elf_loadable_segment_loading_timestamp
+D -      5750 - bl_elf_segs_hash_verify_timestamp
+D -      6752 - bl_sec_hash_seg_auth_timestamp
+D -       820 - bl_sec_segs_hash_verify_timestamp
+D -        35 - pbl_populate_shared_data_and_exit_timestamp
+S -    235452 - PBL, End
+B -    249185 - SBL1, Start
+B -    356179 - SBL1 BUILD @ 13:11:31 on May  5 2023
+B -    360327 - usb: usb_shared_hs_phy_init: hs phy cfg size , 0xc
+D -     10584 - sbl1_hw_init
+D -         0 - boot_flash_init
+B -    583129 - UFS INQUIRY ID: WDC     SDINFDK4-128G   1270
+B -    586423 - UFS Boot LUN: 2
+D -      5368 - Auth Metadata
+D -    248545 - sbl1_xblconfig_init
+D -        31 - boot_config_data_table_default_init
+B -    626104 - Using default CDT
+D -      4727 - boot_config_data_table_init
+B -    633912 - CDT Version:3,Platform ID:35,Major ID:1,Minor ID:0,Subtype:0
+D -     17324 - sbl1_hw_platform_pre_ddr
+D -         0 - devcfg init
+B -    664229 - gpio6 ADC = 0,gpio6_data = 0
+
+B -    664229 - gpio6 npercent = 0
+
+B -    668438 - platform id is not found in the table
+B -    673592 - PM: PM 0=0x8000028000000041:0x800 
+B -    676703 - PM: PM 1=0x8000018000000040:0x1000 
+B -    681339 - PM: PM 2=0x8000018000000020:0x800 
+B -    686097 - PM: PM 4=0x8000018000000020:0x800 
+B -    690733 - PM: HARD RESET by PS_HOLD
+B -    697870 - PM: PMA_2 PON:KPD ON:PON POFF:KPD OFF:POFF FAULT2:FLT_N
+B -    704885 - PM: PMA_3 PON:CBL ON:PON POFF:PS OFF:POFF FAULT2:FLT_N
+B -    803278 - PM: SET_VAL:Skip
+B -    803736 - PM: PSI: b0x00_v0x53
+B -    810629 - PM: Device Init # SPMI Transn: 4729
+B -    828136 - gpio6 ADC = 468555,gpio6_data = 400
+
+B -    828166 - gpio6 npercent = 16383
+
+B -    832985 - Product name is alioth
+B -    836645 - PM: read Platform type 0x2c
+B -    840458 - PM: Driver Init # SPMI Transn: 647
+B -    845063 - gpio6 ADC = 468230,gpio6_data = 400
+
+B -    848906 - gpio6 npercent = 16383
+
+B -    853725 - Product name is alioth
+B -    861686 - PM: battery Id: 101284
+B -    862631 - gpio6 ADC = 467906,gpio6_data = 400
+
+B -    865285 - gpio6 npercent = 16383
+
+B -    870104 - Product name is alioth
+B -    874618 - gpio6 ADC = 468360,gpio6_data = 400
+
+B -    877363 - gpio6 npercent = 16383
+
+B -    882182 - Product name is alioth
+B -    885964 - PM: APSD result: 0
+B -    890234 - gpio6 ADC = 469139,gpio6_data = 399
+
+B -    892643 - gpio6 npercent = 16424
+
+B -    897462 - Product name is alioth
+B -    901214 - PM: Manually set ICL 500mA
+B -    904843 - PM: Vbatt:4395;Ibatt:0
+B -    909113 - PM: CHG Init # SPMI Transn: 92
+D -    257206 - pmic XBL init
+D -     29493 - vsense_railway_cpr init
+D -    299541 - sbl1_hw_pre_ddr_init
+D -        30 - boot_dload_handle_forced_dload_timeout
+B -    954223 - sbl1_ddr_set_params
+B -    959225 - sbl1_ddr_set_params(): platform:35, load ddr trainging data
+D -      1586 - sbl1_load_ddr_training_data
+D -     15738 - sbl1_ddr_set_params
+B -    990823 - eCDT MRR - Data Starting Address: 0x09066D00
+
+B -    990884 - Mi MRR 0x05 = 0xff
+B -    996526 - Mi MRR 0x06 = 0x05
+B -    999729 - Mi MRR 0x07 = 0x00
+B -   1003114 - Mi MRR 0x31 = 0xbe
+B -   1006408 - ddr serial number: fdd6be5a99080000
+B -   1010831 - DSF version = 156.8.18
+B -   1014094 - Manufacturer ID = ff, Device Type = 8
+B -   1017663 - Rank 0 size = 6144 MB, Rank 1 size = 0 MB
+D -     48922 - sbl1_ddr_init
+D -         0 - boot_pre_ddi_entry
+B -   1030625 - do_ddr_training, Start
+B -   1039379 - DDR Training Failed Times = 0
+B -   1065853 - DDR: Start of DDR Training Restore
+B -   1075277 - Frequency = 1805 MHz
+B -   1075277 - DDR: End of DDR Training Restore
+D -     44957 - do_ddr_training, Delta
+B -   1083543 - magic str match
+B -   1086715 - gsort_version:offset:8.val:0x1
+B -   1089673 - trigger bit map is null
+D -     63349 - sbl1_do_ddr_training
+B -   1097847 - magic str match
+B -   1101050 - gsort_version:offset:8.val:0x1
+B -   1104008 - trigger bit map is null
+D -     10644 - sbl1_do_ddr_gsort
+D -        31 - sbl1_hand_control_to_devprog_ddr
+D -       854 - boot_ddi_entry
+B -   1119563 - Pimem init cmd, entry
+D -     10736 - Pimem init cmd, exit
+D -     13908 - sbl1_post_ddr_init
+D -         0 - sbl1_hw_init_secondary
+B -   1140608 - ADC done - mv: 468814, percent: 16386
+B -   1143384 - Product name is alioth
+D -      8509 - sbl1_hw_reset_platform_type
+B -   1152656 - ADC done - mv: 1222902, percent: 42742
+B -   1155889 - HW version is MP
+D -      9028 - sbl1_hw_reset_platform_version
+B -   1164246 - APDP Image Load, Start
+D -      3995 - APDP Image Loaded, Delta - (0 Bytes)
+D -         0 - boot_dload_dump_security_regions
+B -   1177635 - usb: UFS Serial - 8d1cac2
+B -   1181143 - usb: chgr -  SDP_CHARGER
+D -      8326 - boot_dload_check
+D -         0 - boot_cache_set_memory_barrier
+D -         0 - boot_smem_debug_init
+D -       397 - boot_smem_init
+D -         0 - boot_smem_alloc_for_minidump
+B -   1202310 - PM: SMEM Chgr Info Write Success
+D -      4118 - boot_smem_store_pon_status
+D -         0 - boot_smem_store_ddr_status
+D -        31 - sbl1_hw_platform_smem
+D -        61 - boot_ddr_share_data_to_aop
+D -       549 - boot_clock_init_rpm
+D -         0 - boot_vsense_copy_to_smem
+D -         0 - boot_share_flash_data
+D -        31 - boot_populate_ram_partition_table
+D -        30 - boot_populate_ddr_details_shared_table
+D -         0 - sbl1_tlmm_init
+D -         0 - sbl1_efs_handle_cookies
+D -         0 - boot_apt_test
+B -   1253245 - OEM_MISC Image Load, Start
+D -      2257 - OEM_MISC Image Loaded, Delta - (0 Bytes)
+B -   1259528 - QTI_MISC Image Load, Start
+D -      5093 - QTI_MISC Image Loaded, Delta - (0 Bytes)
+B -   1275815 - PM: PM Total Mem Allocated: 2870 
+D -      7259 - sbl1_pm_aop_pre_init_wrapper
+B -   1280359 - AOP Image Load, Start
+D -      5124 - Auth Metadata
+D -      1952 - Segments hash check
+D -     15647 - AOP Image Loaded, Delta - (198280 Bytes)
+B -   1299330 - QSEE Dev Config Image Load, Start
+D -      5154 - Auth Metadata
+D -       610 - Segments hash check
+D -     13756 - QSEE Dev Config Image Loaded, Delta - (45556 Bytes)
+B -   1322114 - QSEE Image Load, Start
+D -      8449 - Auth Metadata
+D -     20252 - Segments hash check
+D -     73474 - QSEE Image Loaded, Delta - (3141629 Bytes)
+D -       152 - sbl1_hw_play_vibr
+B -   1404464 - SEC Image Load, Start
+D -      5032 - Auth Metadata
+D -       244 - Segments hash check
+D -     11316 - SEC Image Loaded, Delta - (7560 Bytes)
+B -   1419256 - CPUCPFW Image Load, Start
+D -      4819 - CPUCPFW Image Loaded, Delta - (0 Bytes)
+B -   1427918 - QHEE Image Load, Start
+D -      5033 - Auth Metadata
+D -      2989 - Segments hash check
+D -     16623 - QHEE Image Loaded, Delta - (440120 Bytes)
+B -   1447865 - OEM_HYP Image Load, Start
+D -      5246 - OEM_HYP Image Loaded, Delta - (0 Bytes)
+B -   1456985 - STI Image Load, Start
+D -      5063 - STI Image Loaded, Delta - (0 Bytes)
+B -   1466104 - APPSBL Image Load, Start
+D -      5124 - Auth Metadata
+D -     13206 - Segments hash check
+D -     25590 - APPSBL Image Loaded, Delta - (2555904 Bytes)
+D -         0 - sbl1_appsbl_arch_determination
+B -   1501057 - SBL1, End
+D -   1255654 - SBL1, Delta
+S - Flash Throughput, 149000 KB/s  (6491695 Bytes,  43440 us)
+S - DDR Frequency, 1555 MHz
+
+
+UEFI Start     [ 1708]
+ - 0x09FC01000 [ 1712] Sec.efi
+ASLR        : ON
+DEP         : ON (RTB)
+Timer Delta : +0 mS
+RAM Entry 0 : Base 0x080000000  Size 0x03CC00000
+RAM Entry 1 : Base 0x0C0000000  Size 0x140000000
+Total RAM   : 0x17CC00000
+UEFI Ver    : 5.0.230505.BOOT.XF.3.2-00304-SM8250-2
+Build Info  : 64b May  5 2023 13:12:04
+Boot Device : UFS
+PROD Mode   : TRUE
+Retail      : TRUE
+PM0: 30, PM1: 32, PM2: 39, PM3: 33, PM4: 42, 
+UFS INQUIRY ID: WDC     SDINFDK4-128G   1270
+UFS Boot LUN: 2
+HW Wdog Setting from PCD : Disabled
+DisplayDxe: K11A PlatformClientInitFunc done!
+DisplayDxe: OLED_VCI_EN line Low skip for J1S or K11A!
+DisplayDxe: MDPPLATFORM_PANEL_K11A_SDC_EA8079_120HZ_FHD_PLUS_DSC_CMD, PANEL ID: A30D0D
+DisplayDxe: Resolution 1080x2400 (1 intf)
+Read Dsi White Color Coordinate Register: 01 F0 0B B3 0C 45 Read White Color Coordinate: 01 F0 0B B3 0C 45 
+DispalyDxe: Set boot service variable <DisplayOledPanelWp> = androidboot.oled_wp=01f00bb30c45
+Overriding PIL cfg by caller
+pil-SPSS failed to validate firmware metadata return Device Error
+pil-SPSS Failed to validate metadata
+SPSSDxe:: SPSSDxe_LoadSPSS ProcessPilImageExt = Load Error 
+[VibratorDxe]: VibratorEntryPoint enter
+2, 2, 2, 2, PmicDxe:: PmicFgSram_ReadBattID: BATT_ID_2 = 100666 
+ChargerLib:: ChargerLibTarget_GetBatteryID BATT_ID_2 = 100666 
+2, PmicDxe:: PmicSchgSetChargerDefaultSetting Setting ICL = 500 mA 
+2, PmicDxe:: PmicSchgInitialChargerCheckup APSD done status: 1, Port Type = 0 
+2, 2, QcomChargerDxe:: ChargerPlatform_Init Enabled WDOG.
+UsbConfigLibOpenProtocols: PMI version (0x20)
+ChargerLib:: ChargerLibTarget_IsChargingSupported PlatformType = 44: ChargerHW = 1, GaugeHW = 1 
+2, UsbConfigInit: UsbConfigInit, not start on port: 0, mode 0
+ChargerLib:: ChargerLibTarget_IsChargingSupported PlatformType = 44: ChargerHW = 1, GaugeHW = 1 
+2, UsbConfigInit: UsbConfigInit, not start on port: 1, mode 0
+UsbConfigPortsQueryConnectionChange: usbport->connectstate: ATT
+2, APC1 IDDQ WC 0 , L2:0, CPU[0]:175, CPU[1]:175, CPU[2]:175, CPU[3]:175
+ APC1 Total 700
+LoadSys  TIME 0ms
+tsens  TIME 2ms
+scm  TIME 3ms
+Load CPU 0 Slp: 0x5B, Int: 0x4B
+Load CPU 1 Slp: 0xE0, Int: 0xFFFFFF65
+Load CPU 2 Slp: 0x92, Int: 0x15
+Load CPU 3 Slp: 0x107, Int: 0xFFFFFFB1
+Load GPU 0 Slp: 0xA9, Int: 0xB3 adc_min:0x19C adc_max:0x17A
+Load NPU 0 Slp: 0x30, Int: 0x24
+LmhIsenseInit Pre CPU  TIME 0ms
+GLD IDDQ WC 0
+LmhIsenseSubSysEntry Post SubSysEntryCb  TIME 0ms
+LmhIsenseSubSysEntry Post LmhIsenseSubSysInit  TIME 0ms
+LmhIsenseInitSubSys Post SubSysEntry  TIME 0ms
+LmhIsenseInitSubSys Post SubSysTrim  TIME 0ms
+LmhIsenseInitSubSys Post SubSysExit  TIME 0ms
+LmhIsenseInit Post CPU  TIME 1ms
+GPU IDDQ 34
+LmhIsenseSubSysEntry Post SubSysEntryCb  TIME 0ms
+LmhIsenseSubSysEntry Post LmhIsenseSubSysInit  TIME 0ms
+LmhIsenseInitSubSys Post SubSysEntry  TIME 0ms
+LmhIsenseInitSubSys Post SubSysTrim  TIME 0ms
+LmhIsenseInitSubSys Post SubSysExit  TIME 1ms
+LmhIsenseInit Post GPU  TIME 2ms
+Entering in func1 of NPU  TIME 2ms
+NPU IDDQ 40
+LmhIsenseSubSysEntry Post SubSysEntryCb  TIME 0ms
+LmhIsenseSubSysEntry Post LmhIsenseSubSysInit  TIME 0ms
+LmhIsenseInitSubSys Post SubSysEntry  TIME 0ms
+LmhIsenseInitSubSys Post SubSysTrim  TIME 0ms
+LmhIsenseInitSubSys Post SubSysExit  TIME 0ms
+LmhIsenseInit Post NPU  TIME 2ms
+isense  TIME 6ms
+ISENSE TOTAL TIME 6ms
+Disp init wait [ 2402] 
+Display_Utils_RenderSplashScreen: hw_country GL, uLogoIndex = 4
+k81 load imagefv logo.img
+ZT3 load imagefv logo.img size:192512
+Setvariable Logo Image returned Success
+Setvariable Logo Image returned LG!!*
+LogoCompressedBlockNum:42 LogoCompressedBytesNum:169210 
+DecompressBufferSize:62208446  ScratchSize:131072
+-----------------------------
+Platform Init  [ 2685] BDS
+INFO: UEFI NV tables are enabled as VOLATILE!
+UEFI Ver   : 5.0.230505.BOOT.XF.3.2-00304-SM8250-2
+Platform           : K11A
+Chip Name          : SM8250
+Chip Ver           : 2.1
+Chip Serial Number : 0xF933E2C3
+Silver cluster Core 0 Freq: 1516 MHz
+-----------------------------
+ChargerLib:: ChargerLibTarget_IsChargingSupported PlatformType = 44: ChargerHW = 1, GaugeHW = 1 
+2, 2, PmicDxe:: PmicFgSram_ReadBattID: BATT_ID_2 = 100680 
+ChargerLib:: ChargerLibTarget_GetBatteryID BATT_ID_2 = 100680 
+2, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:-136, voltage:4409, temp:31
+2, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:-136, voltage:4409, temp:31
+ChargerLib:: ChargerLib_GetErrors pChargingError = 0 
+2, 2, 2, 2, 2, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:-136, voltage:4409, temp:31
+2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, PmicDxe:: PmicFgSram_ReadBattID: BATT_ID_2 = 100680 
+2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, PmicDxe:: PmicFgSram_ReadBattID: BATT_ID_2 = 100680 
+ChargerLib:: ChargerLibTarget_GetBatteryID BATT_ID_2 = 100680 ommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:-136, voltage:4409, temp:31
+ChargerLib:: ChargerLib_GetErrors pChargingError = 0 
+2, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+ChargerLibTarget_GetBatteryStatus:soc:99, current:-136, voltage:4409, temp:31
+2, 2, 2, Display_Utils_RenderSplashScreen: hw_country GL, uLogoIndex = 4
+k81 load imagefv logo.img
+ZT3 load imagefv logo.img size:192512
+Setvariable Logo Image returned Success
+Setvariable Logo Image returned LG!!*
+LogoCompressedBlockNum:42 LogoCompressedBytesNum:169210 
+DecompressBufferSize:62208446  ScratchSize:131072
+2, 2, 2, 2, PmicDxe:: PmicFgCommon_ReadBattTemp: BATT_Temp = 31 
+2, 2, UEFI Total : 1256 ms
+POST Time      [ 2964] OS Loader
+Loader Build Info: May  5 2023 13:49:30
+VB: RWDeviceState: Succeed using rpmb!
+Unlock token and signature is valid!
+ PON Reason is 65 cold_boot:1
+Total DDR Size: 0x000000017CC00000 
+platform: 0x2C, version: 0x190000
+getting IsColdBoot reset status: 1, key: 0
+KeyPress:0, BootReason:34
+Fastboot=0, Recovery:1, Exaid:0
+GetVmData: No Vm data present! Status = (0x3)
+VM Hyp calls not present
+ChargerLib:: ChargerLibTarget_IsChargingSupported PlatformType = 44: ChargerHW = 1, GaugeHW = 1 
+3, A/B retry count NOT decremented
+Booting from slot (_b)
+Booting Into Recovery Mode
+Loading Image Start : 3002 ms
+Loading Image Done : 3003 ms
+Total Image Read size : 4096 Bytes
+Load Image vbmeta_b total time: 2 ms 
+avb_slot_verify.c:577: ERROR: vbmeta_b: Error verifying vbmeta image: OK_NOT_SIGNED
+Load Image boot_b total time: 245 ms 
+Load Image dtbo_b total time: 35 ms 
+Load Image vendor_boot_b total time: 121 ms 
+GetHandleInfo: No media!
+AvbGetSizeOfPartition: GetHandleInfo failedVB2: Authenticate complete! boot state is: orange
+VB2: boot state: orange(1)
+Display_Utils_ShowCustLogo: hw_country GL, PictureIndex = 5
+Picture 5 Successfully Loaded
+display picture 5  [ 3543]
+fatal error is not set
+Memory Base Address: 0x80000000
+Dtbo hdr magic mismatch 0, with D7B7AB1E
+Best match DTB tags 356/0000002C/0x00000000/20001/3001E/20020/20027/20021/(offset)0xE611B018/(size)0x0001FEF3
+Using pmic info 0x3001E/0x20020/0x20027/0x20021 for device 0x3001E/0x20020/0x20027/0x20021
+Memory Base Address: 0x80000000
+ChargerLib:: ChargerLibTarget_IsChargingSupported PlatformType = 44: ChargerHW = 1, GaugeHW = 1 
+3, uart_switch: NOT_SET
+VB: RWDeviceState: read_req err ! status: 0 read status: -15 
+VBRwDevice failed with: 00000050
+Unable to read display cmdline: 00000050
+Unable to get OledPanelId Config, Not Found
+Unable to get OledPmicId Config, Not Found
+Unable to get Battery Profile Vendor Config, Not Found
+VB: readDebugPolicy: ScmSipSysCall Status: (0x7)
+Error Get DebugPolicy: Device Error
+Cmdline: console=ttyMSM0,115200n8 earlycon earlyprintk loglevel=15 pd_ignore_unused clk_ignore_unused pmos.debug-shell  pmos_boot_uuid=8dcccc0d-9e9e-415e-aafe-693679f71bd2 pmos_root_uuid=f9a9936f-a17e-4983-a050-564691383822 pmos_rootfsopts=defaults  andro
+RAM Partitions
+Add Base: 0x0000000080000000 Available Length: ry region node
+pureason = 800041
+Update Device Tree total time: 13 ms 
+
+Shutting Down UEFI Boot Services: 3626 ms
+Start EBS        [ 3626] 
+App Log Flush : 269 ms
+Exit EBS        [ 3919] UEFI End

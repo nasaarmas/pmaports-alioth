@@ -1,9 +1,9 @@
 # Reference: <https://postmarketos.org/devicepkg>
-# Maintainer: Nikroks <nikroksm@mail.ru>
-pkgname=device-xiaomi-aliothf3
-pkgdesc="Xiaomi POCO F3"
-pkgver=1
-pkgrel=0
+# Maintainer: Jianhua Lu <lujianhua000@gmail.com>
+pkgname=device-xiaomi-alioth
+pkgdesc="Xiaomi Poco F3"
+pkgver=5
+pkgrel=2
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
@@ -11,18 +11,15 @@ options="!check !archcheck"
 depends="
 	alsa-ucm-conf
 	bootmac
-	hexagonrpcd
+	hexagonrpcd>=0.3.2-r3
 	make-dynpart-mappings
 	mesa-vulkan-freedreno
-    android-tools
 	mkbootimg
-	swclock-offset
-	linux-xiaomi-aliothf3
 	postmarketos-base
 	qbootctl
-    generate_bootimg
+	swclock-offset
 "
-makedepends="devicepkg-dev android-tools generate_bootimg"
+makedepends="devicepkg-dev"
 source="
 	81-libssc-xiaomi-alioth.rules
 	alsa-ucm-conf/alioth.conf
@@ -30,11 +27,14 @@ source="
 	deviceinfo
 	hexagonrpcd.confd
 	modules-initfs
-    vendor_ramdisk
 "
+
 subpackages="
+	$pkgname-kernel-boe:kernel_boe
+	$pkgname-kernel-csot:kernel_csot
 	$pkgname-nonfree-firmware:nonfree_firmware
-	$pkgname-nonfree-firmware-openrc:nonfree_firmware_openrc
+    $pkgname-nonfree-firmware-openrc:nonfree_firmware_openrc
+
 "
 
 build() {
@@ -51,17 +51,27 @@ package() {
 	install -Dm644 "$srcdir/HiFi.conf" \
 		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/HiFi.conf"
 
-    install -Dm644 "$srcdir/vendor_ramdisk" \
-		"$pkgdir/usr/share/alsa/ucm2/Xiaomi/alioth/vendor_ramdisk"
-
-
 	mkdir -p "$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250"
 	ln -s ../../Xiaomi/alioth/alioth.conf \
 		"$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250/xiaomi-alioth.conf"
+
+
+}
+
+kernel_boe() {
+	pkgdesc="BOE Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish)"
+	depends="linux-postmarketos-qcom-sm8250-alioth"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+kernel_csot() {
+	pkgdesc="CSOT Panel. To know which panel your device use and the status of the port, Visit the Mi Pad 5 Pro wiki page: https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish)"
+	depends="linux-postmarketos-qcom-sm8250"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 nonfree_firmware() {
-	pkgdesc="GPU, venus, modem and sensor firmware"
+	pkgdesc="Firmware for GPU, WiFi, etc."
 	depends="
 		firmware-xiaomi-alioth
 		firmware-qcom-adreno-a650
@@ -69,23 +79,24 @@ nonfree_firmware() {
 		linux-firmware-qca
 		linux-firmware-ath11k
 		tqftpserv
-	"
+		"
 	mkdir "$subpkgdir"
 
-	install -Dm644 81-libssc-xiaomi-alioth.rules \
-		"$subpkgdir"/etc/udev/rules.d/81-libssc-xiaomi-alioth.rules
-
-	install -Dm644 "$srcdir"/hexagonrpcd.confd \
-		"$subpkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
+     install -Dm644 "$srcdir"/81-libssc-xiaomi-alioth.rules \
+         "$subpkgdir"/etc/udev/rules.d/81-libssc-xiaomi-alioth.rules
+	
+     install -Dm644 "$srcdir"/hexagonrpcd.confd \
+		"$pkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
 }
 
 nonfree_firmware_openrc() {
 	install_if="$pkgname-nonfree-firmware=$pkgver-r$pkgrel openrc"
 	install="$subpkgname.post-install $subpkgname.post-upgrade"
 	depends="
-		hexagonrpcd-openrc
-		tqftpserv-openrc
-	"
+        hexagonrpcd-openrc
+        tqftpserv-openrc
+    "
+
 	mkdir -p "$subpkgdir"
 }
 
@@ -93,8 +104,7 @@ sha512sums="
 2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-xiaomi-alioth.rules
 8db13314073e15c45defa9d366e5d1a88d21f87491edea0d0242c370d248022acaef39b6cf74bfaaa45d474eb045ba8de2427c29095978f5f184dda1ae55d53b  alioth.conf
 7e1ac8d01a948c1d60cb397e702872b679f650b04431e7d1a550fb618f2ed431efc04f1dec671c3b5d243d55b3699892256ea0676248e69e0f1c38f7c2001db0  HiFi.conf
-9d8db0c8080facd9b8b00e2a733abbb31b5ee091c810354aacccca3c48fa7bfb4f8afbe01d42dae308556b4cd5387196236caeae451d9e386a64bb81d3ebf96f  deviceinfo
+81146dcc836a8643f5d84b368db2d8716d8e3875812109a0c7eed194faab0c0a2cb6e7bba0ced92511a6dfb682c75597b393bd59c6df89b8ba5e22cc2b981d4d  deviceinfo
 dbf96453e5e398ed11f315069d6eedde0ada1f387bf42e3cc78fcd152e061db68f4c16ed1dc6169067ad65b5bc96c9a8ae9d5503bcb06a257445c9a12390f606  hexagonrpcd.confd
-b2447feecfd7a66223da925783803b002e1880d888060c4e2abfc54523ef45c728313037261fe236b706e4c415a0ee68f20612ae8ed9373ea2c5bfa590227e74  modules-initfs
-2c8374abaeaf96ca76dea4e0f040386e322c6387f286c7a59ff460a22112e123d2f81a3f5c50122ea9df873ac56c560acf2c63846084bcf9e79ff32b3428839a  vendor_ramdisk
+ea9c004524cd6aa986a5075468d20b891415916d05c58f20966e11f47a5f7d46495a97e07e2ad3272f5b2e0a6e5f8ad11ff24f04e193b16f211dd5958cb50054  modules-initfs
 "

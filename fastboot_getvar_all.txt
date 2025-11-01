@@ -1,4 +1,4 @@
-❯ fastboot getvar all                                                                                                                                                                                                                       [20:26:41]
+❯ fastboot getvar all
 
 (bootloader) crc:1
 (bootloader) DP:0xFF

@@ -1,8 +1,11 @@
-# Maintainer: Nikroks <nikroks@mainlining.org>
-_flavor="xiaomi-aliothf3"
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/defconfig
+# Maintainer: Jianhua Lu <lujianhua000@gmail.com>
+
+_flavor="postmarketos-qcom-sm8250-alioth"
 pkgname=linux-$_flavor
-pkgver=6.13.4
-pkgrel=0
+pkgver=6.13.0
+pkgrel=1
 pkgdesc="Mainline kernel fork for SM8250"
 arch="aarch64"
 _carch="arm64"
@@ -11,6 +14,7 @@ license="GPL-2.0-only"
 options="!strip !check !tracedeps
 	pmb:cross-native
 	pmb:kconfigcheck-nftables
+	pmb:kconfigcheck-community
 "
 makedepends="
 	bash
@@ -32,7 +36,6 @@ source="
     0001-modified-dts-to-see-kernel-data-on-uart.patch
 "
 builddir="$srcdir/linux-nikroks-$_tag"
-
 
 prepare() {
 	default_prepare
@@ -57,12 +60,11 @@ package() {
 	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
 
 	install -D "$builddir"/include/config/kernel.release \
-		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
 }
 
-
 sha512sums="
-2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-xiaomi-aliothf3-alioth.tar.gz
-f470ba154a8177130993cce16686771fb10b88f45decaf5a8f9443c26ec8adf765f5de6e313f060dc6677f208f511fdaa61273d6537faa6eb151272a638a4aa3  config-xiaomi-aliothf3.aarch64
+2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-postmarketos-qcom-sm8250-alioth-alioth.tar.gz
+678c75e0b98a13434e9fcb0050cac5eaf115af9452238cfb3add1f240d4a800606ae00a382f9c84e60fa338edfb362b62a9219315753304b46e722fc67856011  config-postmarketos-qcom-sm8250-alioth.aarch64
 1eabe417bfa4d87f1f59f0ee19b76d5e92ebeff1b3441c5889b2014686352e9fd3f5cb29169d30d2f8a02e5677f488cbde2b5ec9630d4e2a181225d03875b81c  0001-modified-dts-to-see-kernel-data-on-uart.patch
 "
