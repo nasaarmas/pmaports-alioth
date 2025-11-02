@@ -2,15 +2,16 @@
 
 **Table of Contents**
 - [1. Innstallation guide](#1-innstallation-guide)
-- [1. Current State](#1-current-state)
-- [2. Introduction](#2-introduction)
-- [3. Getting the Kernel to Work](#3-getting-the-kernel-to-work)
-  - [3.1. Key Config Changes from nikroks defconfig:](#31-key-config-changes-from-nikroks-defconfig)
-- [4. Getting UART Logs](#4-getting-uart-logs)
-  - [4.1. Finding UART Pins on the PCB](#41-finding-uart-pins-on-the-pcb)
-  - [4.2. Reading UART](#42-reading-uart)
-  - [4.3. Arduino Code](#43-arduino-code)
-  - [4.4. Capturing the Logs](#44-capturing-the-logs)
+- [2. Current State](#2-current-state)
+- [3. Introduction](#3-introduction)
+- [4. Getting the Kernel to Work](#4-getting-the-kernel-to-work)
+  - [4.1. Key Config Changes from nikroks defconfig:](#41-key-config-changes-from-nikroks-defconfig)
+- [5. Getting UART Logs](#5-getting-uart-logs)
+  - [5.1. Kernel UART Configuration](#51-kernel-uart-configuration)
+  - [5.2. Finding UART Pins on the Phone's PCB](#52-finding-uart-pins-on-the-phones-pcb)
+  - [5.3. UART to USB-A Converter with Level Shifter from NPN Transistors](#53-uart-to-usb-a-converter-with-level-shifter-from-npn-transistors)
+  - [5.4. Arduino Code](#54-arduino-code)
+  - [5.5. Capturing the Logs](#55-capturing-the-logs)
 
 ---
 # 1. Innstallation guide
@@ -21,9 +22,12 @@ fastboot erase dtbo_b
 pmbootstrap flasher flash_rootfs --partition userdata
 pmbootstrap flasher flash_kernel --partition boot_b
 fastboot set_active b
+fastboot reboot
 ```
 
-# 1. Current State
+Needs reboot after first boot, because of the issues with GUI.
+
+# 2. Current State
 Device was built and tested with plasma-mobile UI with systemd.
 
 It works without major issues, most importantly WiFi with `nmtui` is available.
@@ -34,7 +38,7 @@ Little cranky at times, TODO:
  - Verify which defconfig options are needed
  - Enable bluetooth - disabled to enable UART debugging
 
-# 2. Introduction
+# 3. Introduction
 This phone uses qcom sm8250 CPU and adreno650 GPU, so the port was based on existing postmarketOS work for this chip. Good starting point: [Xiaomi Mi Pad 5 Pro (xiaomi-elish)](https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish))
 
 I also found this [alioth pmaport by nikroks](https://github.com/mainlining/pmaports/tree/nikroks/alioth), but for some reason it crashes straight back to fastboot.
@@ -43,7 +47,7 @@ Good guy @Maledict found that defconfig from Mi Pad 5 Pro worked with [linux for
 
 We can call this our starting point.
 
-# 3. Getting the Kernel to Work
+# 4. Getting the Kernel to Work
 
 The nikroks kernel had potential but needed some config tweaking. Started with the basic setup:
 ```bash
@@ -62,7 +66,7 @@ MMC doesn't seem needed since we only have UFS memory, so disabled `CONFIG_MMC`.
 
 Phone has GPU so DRM should work - adreno650 support is there.
 
-## 3.1. Key Config Changes from nikroks defconfig:
+## 4.1. Key Config Changes from nikroks defconfig:
 ```
 CONFIG_ARM64_VA_BITS to 48
 CONFIG_PGTABLE_LEVELS to 4
@@ -85,13 +89,26 @@ CONFIG_ZRAM_BACKEND_ZSTD to y
 
 *The breakthrough:* After changing `CONFIG_EFI_ZBOOT` to `n`, it started working! Since the phone is missing EFI, this part was never being decompressed - and that was the biggest issue with the config. UART logs showing missing DTB pointed at the decompression issue and further confirms that the phone doesn't have EFI.
 
-# 4. Getting UART Logs
+# 5. Getting UART Logs
 
 UART logs were configured before the elish defconfig was discovered as working. Because the nikroks defconfig failed pretty early, the only logs visible in early work were **Android BootLoader (ABL) logs**, which is still cool. 
 
  - Dumps can be found [here](uart_logs).
 
-## 4.1. Finding UART Pins on the PCB
+## 5.1. Kernel UART Configuration
+**Device Tree:** The kernel DTB must be patched to designate the appropriate UART interface as serial0 output, as demonstrated in [this patch](linux-postmarketos-qcom-sm8250-alioth/0001-modified-dts-to-see-kernel-data-on-uart.patch).
+
+**Kernel Command Line:** The following parameters enable comprehensive UART logging: \
+`deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon earlyprintk loglevel=15 console=tty0"`
+
+Where:
+ - `console=ttyMSM0,115200n8` - Primary UART console at 115200 baud. MSM is qcom specific
+ - `earlycon` - Enable early console during boot initialization
+ - `earlyprintk` - Enable early kernel printk messages
+ - `loglevel=15` - Maximum kernel log verbosity (debug level)
+ - `console=tty0` - Mirror output to virtual terminal (phone's screen)
+
+## 5.2. Finding UART Pins on the Phone's PCB
 
 [pmOS wiki for xiaomi poco F3](https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F3_(xiaomi-alioth)) already contains info about UART TX location.
 
@@ -108,7 +125,7 @@ So I decided to solder wire to UART TX pin only, like in this example image from
 | ------------------------------------------------ |
 | _UART TX marked on the poco F3 PCB_              |
 
-## 4.2. Reading UART
+## 5.3. UART to USB-A Converter with Level Shifter from NPN Transistors
 
 I didn't have a UART to USB-A converter so I had to get creative. Found an _Arduino UNO R3_ which by default communicates with the computer via UART protocol on pins 0 and 1.
 
@@ -122,19 +139,20 @@ In my Arduino kit I found a few [NPN transistors BC547B](https://www.farnell.com
 | -------------------------------------------------------------- |
 | _Level shifter with transistors as if connected to the device_ |
 
+**Don't forget to connect phone's ground to Arduino's ground, for the same reference point.**
+
 Final working connection:
 | ![level shifter photo](images/uart_connection_photo.jpeg) |
 | --------------------------------------------------------- |
 | _Phone connected to the arduino via level shifter_        |
 
-## 4.3. Arduino Code
+## 5.4. Arduino Code
 
 Simple passthrough from RX to TX:
 ```cpp
 String receivedMessage;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(115200);
   Serial.print("UART adapter begin:\r\n");
 }
@@ -154,11 +172,10 @@ void loop() {
 }
 ```
 
-## 4.4. Capturing the Logs
+## 5.5. Capturing the Logs
 
-Connect arduino to the computer and listen via `minicom`:
+Connect arduino to the computer and listen via `minicom`, logs will be saved to uart_logs.txt file:
 ```bash
 minicom -b 115200 -D /dev/ttyACM0 -C uart_logs.txt
 ```
 
-Also needs DTB changes like in the [following patch](linux-postmarketos-qcom-sm8250-alioth/0001-modified-dts-to-see-kernel-data-on-uart.patch).
