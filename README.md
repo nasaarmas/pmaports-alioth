@@ -36,7 +36,12 @@ Little cranky at times, TODO:
  - Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start
  - Fix `KWindow` as it crashes frequently
  - Verify which defconfig options are needed
- - Enable bluetooth - disabled to enable UART debugging
+  
+
+Done:
+ - ~~Enable bluetooth - disabled to enable UART debugging~~
+ - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~
+
 
 # 3. Introduction
 This phone uses qcom sm8250 CPU and adreno650 GPU, so the port was based on existing postmarketOS work for this chip. Good starting point: [Xiaomi Mi Pad 5 Pro (xiaomi-elish)](https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish))
@@ -112,7 +117,7 @@ Where:
 
 [pmOS wiki for xiaomi poco F3](https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F3_(xiaomi-alioth)) already contains info about UART TX location.
 
-To verify it I looked for the phone schematic on yandex and [found it here](https://vk.com/wall-203976641_3526) (but it can contain viruses, use at your own responsibility).
+To verify it I looked for the phone schematic on yandex and [found it here](https://vk.com/wall-203976641_3526) (but it can contain viruses, use at your own risk).
 
 | ![UART schema](images/uart_pins_schema.png) | ![UART TX PCB](images/uart_tx_pcb.png) |
 | ------------------------------------------- | -------------------------------------- |
@@ -120,7 +125,7 @@ To verify it I looked for the phone schematic on yandex and [found it here](http
 
 We don't really need RX for reading logs. Also according to the PCB schema, RX pin (TP7307) is located on the other side of the PCB which would require disassembling the whole board.
 
-So I decided to solder wire to UART TX pin only, like in this example image from pmOS wiki:
+So I decided to solder a wire to the UART TX pin only, and for ground I connected GND to the phone’s metal chassis, which is tied to the board's ground. Example image from pmOS wiki:
 | ![UART TX on alioth PCB](images/Alioth_uart.jpg) |
 | ------------------------------------------------ |
 | _UART TX marked on the poco F3 PCB_              |

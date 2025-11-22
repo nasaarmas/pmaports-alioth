@@ -33,7 +33,6 @@ _config="config-$_flavor.$arch"
 source="
 	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/nikroks/alioth/linux-$_tag.tar.gz
 	$_config
-    0001-modified-dts-to-see-kernel-data-on-uart.patch
 "
 builddir="$srcdir/linux-nikroks-$_tag"
 
@@ -65,6 +64,5 @@ package() {
 
 sha512sums="
 2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-postmarketos-qcom-sm8250-alioth-alioth.tar.gz
-678c75e0b98a13434e9fcb0050cac5eaf115af9452238cfb3add1f240d4a800606ae00a382f9c84e60fa338edfb362b62a9219315753304b46e722fc67856011  config-postmarketos-qcom-sm8250-alioth.aarch64
-1eabe417bfa4d87f1f59f0ee19b76d5e92ebeff1b3441c5889b2014686352e9fd3f5cb29169d30d2f8a02e5677f488cbde2b5ec9630d4e2a181225d03875b81c  0001-modified-dts-to-see-kernel-data-on-uart.patch
+d4f0722113e97710d3e2df6d894efc0f0cb64922acb8494bd5215c6a00f1b30f560dfb3487c18aef0ecdc4fa8faca63703481cd005f05c11a8037bd04fd54934  config-postmarketos-qcom-sm8250-alioth.aarch64
 "

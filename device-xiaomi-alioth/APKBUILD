@@ -1,5 +1,5 @@
 # Reference: <https://postmarketos.org/devicepkg>
-# Maintainer: Jianhua Lu <lujianhua000@gmail.com>
+# Maintainer: nasaarmas 
 pkgname=device-xiaomi-alioth
 pkgdesc="Xiaomi Poco F3"
 pkgver=5
@@ -25,11 +25,12 @@ depends="
 makedepends="devicepkg-dev"
 source="
 	81-libssc-xiaomi-alioth.rules
-	alsa-ucm-conf/alioth.conf
-	alsa-ucm-conf/HiFi.conf
+    alsa-ucm-conf/alioth.conf
+    alsa-ucm-conf/HiFi.conf
 	deviceinfo
 	hexagonrpcd.confd
 	modules-initfs
+    wifi-powersave.conf
 "
 
 subpackages="
@@ -40,8 +41,9 @@ build() {
 	devicepkg_build $startdir $pkgname
 }
 
+
 package() {
-	devicepkg_package $startdir $pkgname
+    devicepkg_package $startdir $pkgname
 
 	# device-specific alsa ucm conf
 	install -Dm644 "$srcdir/alioth.conf" \
@@ -54,7 +56,6 @@ package() {
 	ln -s ../../Xiaomi/alioth/alioth.conf \
 		"$pkgdir/usr/share/alsa/ucm2/conf.d/sm8250/xiaomi-alioth.conf"
 }
-
 
 nonfree_firmware() {
 	pkgdesc="Firmware for GPU, WiFi, etc."
@@ -69,10 +70,14 @@ nonfree_firmware() {
 	mkdir "$subpkgdir"
 
      install -Dm644 "$srcdir"/81-libssc-xiaomi-alioth.rules \
-         "$subpkgdir"/etc/udev/rules.d/81-libssc-xiaomi-alioth.rules
+        "$subpkgdir"/etc/udev/rules.d/81-libssc-xiaomi-alioth.rules
 	
      install -Dm644 "$srcdir"/hexagonrpcd.confd \
-		"$pkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
+		"$subpkgdir"/usr/share/hexagonrpcd/hexagonrpcd-sdsp.conf
+
+     # makes the device more responsive through ssh
+     install -Dm644 "$srcdir"/wifi-powersave.conf \
+        "$subpkgdir"/etc/NetworkManager/conf.d/wifi-powersave.conf
 }
 
 
@@ -80,7 +85,8 @@ sha512sums="
 2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-xiaomi-alioth.rules
 8db13314073e15c45defa9d366e5d1a88d21f87491edea0d0242c370d248022acaef39b6cf74bfaaa45d474eb045ba8de2427c29095978f5f184dda1ae55d53b  alioth.conf
 7e1ac8d01a948c1d60cb397e702872b679f650b04431e7d1a550fb618f2ed431efc04f1dec671c3b5d243d55b3699892256ea0676248e69e0f1c38f7c2001db0  HiFi.conf
-81146dcc836a8643f5d84b368db2d8716d8e3875812109a0c7eed194faab0c0a2cb6e7bba0ced92511a6dfb682c75597b393bd59c6df89b8ba5e22cc2b981d4d  deviceinfo
+9a2c05185677cf7c52ea831042463469cc97b84c08f44e04ebfb0d00572b22920944b0f201f31e49d7e7a67c4ec7fe2d49327f78a86be67b633169b81788f36e  deviceinfo
 dbf96453e5e398ed11f315069d6eedde0ada1f387bf42e3cc78fcd152e061db68f4c16ed1dc6169067ad65b5bc96c9a8ae9d5503bcb06a257445c9a12390f606  hexagonrpcd.confd
-ea9c004524cd6aa986a5075468d20b891415916d05c58f20966e11f47a5f7d46495a97e07e2ad3272f5b2e0a6e5f8ad11ff24f04e193b16f211dd5958cb50054  modules-initfs
+a05f4bb95ecb941370edee9077ab123997a6423ce1b77ea5f7a946681cfab14354c006f9770da6b633a9188826b3f848d1958a18f516c6952d70684b4a586b31  modules-initfs
+21676a9e1079f1b86b840b7c86a65c1cc960a458eb9e219a7a16029b92a9d2f1ecfc9c3ff18b0ec1c86f624fe6a435fecd3b1db0d3cd1a0f3c6c3cac78ab996f  wifi-powersave.conf
 "
