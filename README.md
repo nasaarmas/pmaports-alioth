@@ -61,7 +61,18 @@ make defconfig sm8250.config
 ```
  All changes were made with `make menuconfig`.
 
-First thing - verified that poco's CPU is using 48-bit addressing not 52, and 4 page table levels instead of 5:
+The first thing I checked was the CPU architecture of the Poco F3: it uses **Cortex A77** and **Cortex A55** cores. According to the [ARM manual](https://developer.arm.com/documentation/101111/0101/AArch64-System-registers/ID-AA64MMFR2-EL1--AArch64-Memory-Model-Feature-Register-2--EL1?lang=en) these cores support 48 bit virtual addresses and do not implement LVA (Large Virtual Addressing). The relevant ID register field:
+
+```
+ VARange, [19:16]
+
+    Indicates support for a larger virtual address. The value is:
+
+    0x0
+        VMSAv8-64 supports 48-bit virtual addresses. 
+```
+
+Based on this, I changed the kernel configuration to match the hardware capabilities:
 - `CONFIG_ARM64_VA_BITS` to 48
 - `CONFIG_PGTABLE_LEVELS` to 4
 
