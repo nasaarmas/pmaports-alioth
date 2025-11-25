@@ -109,7 +109,7 @@ CONFIG_ZRAM_BACKEND_ZSTD to y
 
 UART logs were configured before the elish defconfig was discovered as working. Because the nikroks defconfig failed pretty early, the only logs visible in early work were **Android BootLoader (ABL) logs**, which is still cool. 
 
- - Dumps can be found [here](uart_logs).
+ - Dumps can be found [here](Notes/uart_logs).
 
 ## 5.1. Kernel UART Configuration
 **Device Tree:** The kernel DTB must be patched to designate the appropriate UART interface as serial0 output, as demonstrated in [this patch](linux-postmarketos-qcom-sm8250-alioth/0001-modified-dts-to-see-kernel-data-on-uart.patch).
