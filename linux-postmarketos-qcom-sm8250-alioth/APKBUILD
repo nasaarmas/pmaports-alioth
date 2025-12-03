@@ -4,7 +4,7 @@
 
 _flavor="postmarketos-qcom-sm8250-alioth"
 pkgname=linux-$_flavor
-pkgver=6.13.0
+pkgver=6.15.1
 pkgrel=1
 pkgdesc="Mainline kernel fork for SM8250"
 arch="aarch64"
@@ -19,8 +19,11 @@ options="!strip !check !tracedeps
 makedepends="
 	bash
 	bison
+    clang
 	findutils
 	flex
+    lld
+    llvm
 	openssl-dev
 	perl
 	postmarketos-installkernel
@@ -43,7 +46,7 @@ prepare() {
 
 build() {
 	unset LDFLAGS
-	make ARCH="$_carch" CC="${CC:-gcc}" \
+	make ARCH="$_carch" LLVM=1 \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
 }
 
@@ -64,5 +67,5 @@ package() {
 
 sha512sums="
 2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-postmarketos-qcom-sm8250-alioth-alioth.tar.gz
-d4f0722113e97710d3e2df6d894efc0f0cb64922acb8494bd5215c6a00f1b30f560dfb3487c18aef0ecdc4fa8faca63703481cd005f05c11a8037bd04fd54934  config-postmarketos-qcom-sm8250-alioth.aarch64
+8ae58017c1b70cf4e5d80e620f3027c58ab06799ee454820a33834083007451b902a2313fbf7812caf37b9aa98b08c3b97e718db0354862bbc55f7886a3360a5  config-postmarketos-qcom-sm8250-alioth.aarch64
 "
