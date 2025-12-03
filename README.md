@@ -33,7 +33,6 @@ Device was built and tested with plasma-mobile UI with systemd.
 It works without major issues, most importantly WiFi with `nmtui` is available.
 
 Little cranky at times, TODO:
- - Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start
  - Fix `KWindow` as it crashes frequently
  - Verify which defconfig options are needed
   
@@ -41,7 +40,7 @@ Little cranky at times, TODO:
 Done:
  - ~~Enable bluetooth - disabled to enable UART debugging~~
  - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~
-
+ - ~~Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start~~
 
 # 3. Introduction
 This phone uses qcom sm8250 CPU and adreno650 GPU, so the port was based on existing postmarketOS work for this chip. Good starting point: [Xiaomi Mi Pad 5 Pro (xiaomi-elish)](https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish))
