@@ -30,17 +30,19 @@ Needs reboot after first boot, because of the issues with GUI.
 # 2. Current State
 Device was built and tested with plasma-mobile UI with systemd.
 
+If **building kernel crashes** because of the RAM usage disable `Link Time
+Optimization` in the defconfig. 
+
 It works without major issues, most importantly WiFi with `nmtui` is available.
 
 Little cranky at times, TODO:
- - Fix `KWindow` as it crashes frequently
- - Verify which defconfig options are needed
-  
+ - Improve camera and speakers quality 
 
 Done:
  - ~~Enable bluetooth - disabled to enable UART debugging~~
  - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~
  - ~~Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start~~
+ - ~~Verify which defconfig options are needed~~
 
 # 3. Introduction
 This phone uses qcom sm8250 CPU and adreno650 GPU, so the port was based on existing postmarketOS work for this chip. Good starting point: [Xiaomi Mi Pad 5 Pro (xiaomi-elish)](https://wiki.postmarketos.org/wiki/Xiaomi_Mi_Pad_5_Pro_(xiaomi-elish))
@@ -75,7 +77,6 @@ Based on this, I changed the kernel configuration to match the hardware capabili
 - `CONFIG_ARM64_VA_BITS` to 48
 - `CONFIG_PGTABLE_LEVELS` to 4
 
-It seems it should also have `CONFIG_ARM64_ERRATUM_2441007=y`, but didn't change it yet.
 
 MMC doesn't seem needed since we only have UFS memory, so disabled `CONFIG_MMC`. Same deal with `CONFIG_ATA`.
 
@@ -83,18 +84,9 @@ Phone has GPU so DRM should work - adreno650 support is there.
 
 ## 4.1. Key Config Changes from nikroks defconfig:
 ```
-CONFIG_ARM64_VA_BITS to 48
-CONFIG_PGTABLE_LEVELS to 4
-
-changed zstd compression support
 changed preempt to none
-changed i2c_slave to no
-changed null_tty to y
 
 CONFIG_DM_INTEGRITY to y
-CONFIG_UDF_FS to y
-CONFIG_XFS_FS to y
-CONFIG_CRYPTO_MD4 to y
 CONFIG_USB_MASS_STORAGE to n
 CONFIG_ANDROID_BINDERFS to n
 CONFIG_ZRAM_BACKEND_ZSTD to y
