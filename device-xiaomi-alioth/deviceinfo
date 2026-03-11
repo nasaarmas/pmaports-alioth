@@ -11,9 +11,8 @@ deviceinfo_arch="aarch64"
 deviceinfo_flash_kernel_on_update="true"
 
 # Device related
-deviceinfo_gpu_accelerated="true"
+deviceinfo_drm="true"
 deviceinfo_chassis="handset"
-deviceinfo_keyboard="false"
 deviceinfo_external_storage="false"
 deviceinfo_screen_width="1080"
 deviceinfo_screen_height="2400"
@@ -24,7 +23,7 @@ deviceinfo_append_dtb="true"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon earlyprintk loglevel=15 console=tty0"
+deviceinfo_kernel_cmdline=""
 deviceinfo_generate_bootimg="true"
 deviceinfo_bootimg_qcdt="false"
 deviceinfo_bootimg_dtb_second="false"

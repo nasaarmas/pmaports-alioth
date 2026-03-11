@@ -1,7 +1,7 @@
 **pmaport for xiaomi poco f3 - alioth**
 
 **Table of Contents**
-- [1. Innstallation guide](#1-innstallation-guide)
+- [1. Installation guide](#1-installation-guide)
 - [2. Current State](#2-current-state)
 - [3. Introduction](#3-introduction)
 - [4. Getting the Kernel to Work](#4-getting-the-kernel-to-work)
@@ -14,7 +14,7 @@
   - [5.5. Capturing the Logs](#55-capturing-the-logs)
 
 ---
-# 1. Innstallation guide
+# 1. Installation guide
 
 After building the device with systemd:
 ```
@@ -37,7 +37,7 @@ It works without major issues, most importantly WiFi with `nmtui` is available.
 
 Little cranky at times, TODO:
  - Improve camera and speakers quality 
-
+ - Move to generic sm8250-linux instead of nikroks
 Done:
  - ~~Enable bluetooth - disabled to enable UART debugging~~
  - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~
