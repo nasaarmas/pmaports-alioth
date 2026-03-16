@@ -25,7 +25,7 @@ fastboot set_active b
 fastboot reboot
 ```
 
-Needs reboot after first boot, because of the issues with GUI.
+~~Needs reboot after first boot, because of the issues with GUI.~~
 
 # 2. Current State
 Device was built and tested with plasma-mobile UI with systemd.
@@ -38,6 +38,7 @@ It works without major issues, most importantly WiFi with `nmtui` is available.
 Little cranky at times, TODO:
  - Improve camera and speakers quality 
  - Move to generic sm8250-linux instead of nikroks
+
 Done:
  - ~~Enable bluetooth - disabled to enable UART debugging~~
  - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~

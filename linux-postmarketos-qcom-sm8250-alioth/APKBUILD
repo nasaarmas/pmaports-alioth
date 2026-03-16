@@ -28,6 +28,7 @@ makedepends="
 	perl
 	postmarketos-installkernel
 	python3
+    zstd
 "
 
 # Source
@@ -55,6 +56,7 @@ package() {
 
 	make zinstall modules_install dtbs_install \
 		ARCH="$_carch" \
+        LLVM=1 \
 		INSTALL_PATH="$pkgdir"/boot/ \
 		INSTALL_MOD_PATH="$pkgdir" \
 		INSTALL_MOD_STRIP=1 \
@@ -67,5 +69,5 @@ package() {
 
 sha512sums="
 2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-postmarketos-qcom-sm8250-alioth-alioth.tar.gz
-a11d4fc1256ffe39f7291b078d92637ba4fdbc1903f528b098aa6025b88b5137c5ed90e2365905105dc87eb8b4bccec8ed6eff48a3bbc74e0402cee56fe54963  config-postmarketos-qcom-sm8250-alioth.aarch64
+4cb136f535a5b5fff4504fdbde8485a68d2af1952ea148cf963cdcd873e14dd67a6a32613c34c5d5e197e7cd8cff388cb7f655461783f71fadf11a186ac18171  config-postmarketos-qcom-sm8250-alioth.aarch64
 "
