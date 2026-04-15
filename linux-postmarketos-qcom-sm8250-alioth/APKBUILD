@@ -4,12 +4,12 @@
 
 _flavor="postmarketos-qcom-sm8250-alioth"
 pkgname=linux-$_flavor
-pkgver=6.15.1
+pkgver=6.19.6
 pkgrel=1
 pkgdesc="Mainline kernel fork for SM8250"
 arch="aarch64"
 _carch="arm64"
-url="https://github.com/mainlining/linux/tree/nikroks/alioth"
+url="https://gitlab.postmarketos.org/soc/qualcomm-sm8250/linux/-/tree/6.19.6"
 license="GPL-2.0-only"
 options="!strip !check !tracedeps
 	pmb:cross-native
@@ -17,28 +17,36 @@ options="!strip !check !tracedeps
 	pmb:kconfigcheck-community
 "
 makedepends="
-	bash
 	bison
-    clang
+	clang
+	clang-libclang
+	diffutils
+	elfutils-dev
 	findutils
 	flex
-    lld
-    llvm
+	linux-headers
+	lld
+	llvm
 	openssl-dev
+	pahole
 	perl
 	postmarketos-installkernel
 	python3
-    zstd
+	rust
+	rust-bindgen
+	rust-src
+	rustfmt
+	sed
+	zstd
 "
 
-# Source
-_tag="alioth"
-_config="config-$_flavor.$arch"
 source="
-	$pkgname-$_tag.tar.gz::https://github.com/mainlining/linux/archive/nikroks/alioth/linux-$_tag.tar.gz
-	$_config
+    linux-$pkgver.tar.gz::https://gitlab.postmarketos.org/soc/qualcomm-sm8250/linux/-/archive/$pkgver/linux-$pkgver.tar.gz
+    config-$_flavor.$arch
+
+    0001-Added-POCO-F3-dts-panel-and-touchscreen-drivers.patch
 "
-builddir="$srcdir/linux-nikroks-$_tag"
+builddir="$srcdir/linux-$pkgver"
 
 prepare() {
 	default_prepare
@@ -68,6 +76,7 @@ package() {
 }
 
 sha512sums="
-2113afce33bf264f4565411ccaacbef81752e6ce509435781d245384fa3c5e7f43a86d552ddb363a3e06df3fe537e3af063130601cba4ded30345ab7168c5344  linux-postmarketos-qcom-sm8250-alioth-alioth.tar.gz
-4cb136f535a5b5fff4504fdbde8485a68d2af1952ea148cf963cdcd873e14dd67a6a32613c34c5d5e197e7cd8cff388cb7f655461783f71fadf11a186ac18171  config-postmarketos-qcom-sm8250-alioth.aarch64
+bb1570cb95f365410402707e36451b35c513d1d9268921d31ce80899df2dbeeffc60109687403208fec34e559ce37ee4a540d3e32ce267a0338e7c198d034f35  linux-6.19.6.tar.gz
+a1a7290178c83125b7bb6ffe70bd447f44002565d59a5ca38bd82ec9f15f2c62ec2a1f44f08ac85c296eedf4f102199c6550a2d8c414a4238d07bdca99da1b96  config-postmarketos-qcom-sm8250-alioth.aarch64
+3155103c7c498ae0d3e00117cefd7364e8b8100aa9cad2967086904d77e2aab16063b60a2d4603b29190c2aa96ac7dc81e9ceda01dadada1f109573897d74ac4  0001-Added-POCO-F3-dts-panel-and-touchscreen-drivers.patch
 "
