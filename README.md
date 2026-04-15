@@ -36,10 +36,10 @@ Optimization` in the defconfig.
 It works without major issues, most importantly WiFi with `nmtui` is available.
 
 Little cranky at times, TODO:
- - Improve camera and speakers quality 
- - Move to generic sm8250-linux instead of nikroks
+ - ~~Improve camera and speakers quality ~~ Add camera patches
 
 Done:
+ - ~~Move to generic sm8250-linux instead of nikroks~~
  - ~~Enable bluetooth - disabled to enable UART debugging~~
  - ~~Changed NetworkManagers powersave option - changed powersave to 2 in NetworkManager for better responsivness~~
  - ~~Fix why **the phones needs to be rebooted after flashing** because GUI doesnt want to start~~
